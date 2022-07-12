@@ -16,7 +16,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.type.Stairs;
 import org.bukkit.craftbukkit.v1_17_R1.block.impl.CraftAmethystCluster;
 import org.bukkit.material.Cake;
 import org.bukkit.material.Gate;
@@ -174,14 +176,38 @@ public enum BlockData {
             .toArray(Material[]::new)),
 
     _STAIR((protocol, b) -> {
-        boolean inverted = (b.getData() & 4) != 0;
+        Stairs stairs = (Stairs) b.getBlockData();
+        Stairs.Shape shape = stairs.getShape();
+        boolean inverted = stairs.getHalf() == Bisected.Half.TOP;
         int dir = (b.getData() & 0b11);
-        SimpleCollisionBox top;
+//        Bukkit.broadcastMessage("[ facing: " + stairs.getFacing() + ", shape: " + stairs.getShape());
+        SimpleCollisionBox top = new SimpleCollisionBox(0, .5, 0, .5, 1, 1);
         SimpleCollisionBox bottom = new SimpleCollisionBox(0, 0, 0, 1, .5, 1);
-        if (dir == 0) top = new SimpleCollisionBox(.5, .5, 0, 1, 1, 1);
-        else if (dir == 1) top = new SimpleCollisionBox(0, .5, 0, .5, 1, 1);
-        else if (dir == 2) top = new SimpleCollisionBox(0, .5, .5, 1, 1, 1);
-        else top = new SimpleCollisionBox(0, .5, 0, 1, 1, .5);
+
+//        if (dir == 0) ;
+//        else if (dir == 1) top = new SimpleCollisionBox(0, .5, 0, .5, 1, 1);
+//        else if (dir == 2) top = new SimpleCollisionBox(0, .5, .5, 1, 1, 1);
+//        else top = new SimpleCollisionBox(0, .5, 0, 1, 1, .5);
+
+        switch (stairs.getFacing()) {
+            case NORTH:
+                if (shape == Stairs.Shape.OUTER_RIGHT) {
+                    top = new SimpleCollisionBox(.5, .5, 0, 1, 1, 0.5);
+                } else if (shape == Stairs.Shape.STRAIGHT) {
+                    top = new SimpleCollisionBox(0, .5, 0, 1, 1, 0.5);
+                } else if (shape == Stairs.Shape.OUTER_LEFT) {
+
+                }
+            case EAST:
+                if (shape == Stairs.Shape.OUTER_RIGHT) {
+
+                } else if (shape == Stairs.Shape.STRAIGHT) {
+
+                } else if (shape == Stairs.Shape.OUTER_LEFT) {
+                    top = new SimpleCollisionBox(.5, .5, 0, 1, 1, 0.5);
+                }
+        }
+
         if (inverted) {
             top.offset(0, -.5, 0);
             bottom.offset(0, .5, 0);
@@ -579,8 +605,9 @@ public enum BlockData {
     }
 
     public CollisionBox getBox(Block block, ProtocolVersion version) {
-        if (this.box != null)
+        if (this.box != null) {
             return this.box.copy().offset(block.getX(), block.getY(), block.getZ());
+        }
         return new DynamicCollisionBox(dynamic, block, version).offset(block.getX(), block.getY(), block.getZ());
     }
 
