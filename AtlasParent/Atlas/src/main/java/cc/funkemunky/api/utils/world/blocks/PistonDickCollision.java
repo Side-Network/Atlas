@@ -5,6 +5,7 @@ import cc.funkemunky.api.utils.world.CollisionBox;
 import cc.funkemunky.api.utils.world.types.CollisionFactory;
 import cc.funkemunky.api.utils.world.types.ComplexCollisionBox;
 import cc.funkemunky.api.utils.world.types.SimpleCollisionBox;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 
 public class PistonDickCollision implements CollisionFactory {
@@ -18,19 +19,19 @@ public class PistonDickCollision implements CollisionFactory {
             case 0:
                 return new ComplexCollisionBox(new SimpleCollisionBox(0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 1.0F),
                         new SimpleCollisionBox(0.375F, 0.25F, 0.375F, 0.625F, 1.0F, 0.625F));
-            case 1:
+            case 1: // Up
                 return new ComplexCollisionBox(new SimpleCollisionBox(0.0F, 0.75F, 0.0F, 1.0F, 1.0F, 1.0F),
                         new SimpleCollisionBox(0.375F, 0.0F, 0.375F, 0.625F, 0.75F, 0.625F));
-            case 2:
+            case 2: // North
                 return new ComplexCollisionBox(new SimpleCollisionBox(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.25F),
                         new SimpleCollisionBox(0.25F, 0.375F, 0.25F, 0.75F, 0.625F, 1.0F));
-            case 3:
+            case 3: // South
                 return new ComplexCollisionBox(new SimpleCollisionBox(0.0F, 0.0F, 0.75F, 1.0F, 1.0F, 1.0F),
                         new SimpleCollisionBox(0.25F, 0.375F, 0.0F, 0.75F, 0.625F, 0.75F));
-            case 4:
+            case 4: // West
                 return new ComplexCollisionBox(new SimpleCollisionBox(0.0F, 0.0F, 0.0F, 0.25F, 1.0F, 1.0F),
-                        new SimpleCollisionBox(0.375F, 0.25F, 0.25F, 0.625F, 0.75F, 1.0F));
-            case 5:
+                        new SimpleCollisionBox(0.25F, 0.25F, 0.25F, 1F, 0.625F, 0.75F));
+            case 5: // East
                 return new ComplexCollisionBox(new SimpleCollisionBox(0.75F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F),
                         new SimpleCollisionBox(0.0F, 0.375F, 0.25F, 0.75F, 0.625F, 0.75F));
         }
