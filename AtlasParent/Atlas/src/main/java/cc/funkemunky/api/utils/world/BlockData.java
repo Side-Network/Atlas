@@ -280,9 +280,11 @@ public enum BlockData {
                     .map(BlockData::m)
                     .toArray(Material[]::new)),
 
-    _TRAPDOOR(new TrapDoorHandler(), Arrays.stream(Material.values())
-            .filter(mat -> mat.name().contains("TRAP_DOOR")
-                    || mat.name().contains("TRAPDOOR")).toArray(Material[]::new)),
+    _TRAPDOOR(new TrapDoorHandler(), Stream.of(XMaterial.IRON_TRAPDOOR, XMaterial.OAK_TRAPDOOR,
+                    XMaterial.SPRUCE_TRAPDOOR, XMaterial.BIRCH_TRAPDOOR, XMaterial.JUNGLE_TRAPDOOR, XMaterial.ACACIA_TRAPDOOR,
+                    XMaterial.DARK_OAK_TRAPDOOR, XMaterial.CRIMSON_TRAPDOOR, XMaterial.WARPED_TRAPDOOR)
+            .map(BlockData::m)
+            .toArray(Material[]::new)),
 
     _STUPID(new SimpleCollisionBox(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F),
             XMaterial.REPEATER.parseMaterial(), XMaterial.COMPARATOR.parseMaterial()),
@@ -291,7 +293,7 @@ public enum BlockData {
             0.625, 0.625, 0.625),
             XMaterial.STRUCTURE_VOID.parseMaterial()),
     
-    _END_ROD(new DynamicRod(), XMaterial.END_ROD.parseMaterial(), XMaterial.LIGHTNING_ROD.parseMaterial()),
+    _END_ROD(new DynamicRod(), XMaterial.END_ROD.parseMaterial(), XMaterial.LIGHTNING_ROD.parseMaterial(), XMaterial.CHAIN.parseMaterial()),
 
     _CAULDRON(new CouldronBounding(), XMaterial.CAULDRON.parseMaterial()),
 
@@ -342,7 +344,7 @@ public enum BlockData {
 
     _CAMPFIRE((version, block) -> version.isOrAbove(ProtocolVersion.V1_14)
             ? new SimpleCollisionBox(0,0,0, 1, 0.4375, 1)
-            : NoCollisionBox.INSTANCE, XMaterial.CAMPFIRE.parseMaterial()),
+            : NoCollisionBox.INSTANCE, XMaterial.CAMPFIRE.parseMaterial(), XMaterial.SOUL_CAMPFIRE.parseMaterial()),
 
     _LECTERN((version, block) -> {
         if(ProtocolVersion.getGameVersion().isOrAbove(ProtocolVersion.V1_14)) {
