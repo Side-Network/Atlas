@@ -6,6 +6,7 @@ import cc.funkemunky.api.utils.world.types.CollisionFactory;
 import cc.funkemunky.api.utils.world.types.SimpleCollisionBox;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.Orientable;
 
 @SuppressWarnings("Duplicates")
 public class DynamicRod implements CollisionFactory {
@@ -16,18 +17,30 @@ public class DynamicRod implements CollisionFactory {
 
     @Override
     public CollisionBox fetch(ProtocolVersion version, Block b) {
-        switch (((Directional) b.getBlockData()).getFacing()) {
-            case UP:
-            case DOWN:
-            default:
-                return UD.copy();
-            case NORTH:
-            case SOUTH:
-                return NS.copy();
-            case EAST:
-            case WEST:
-                return EW.copy();
-        }
+        if (b.getBlockData() instanceof Directional)
+            switch (((Directional) b.getBlockData()).getFacing()) {
+                case UP:
+                case DOWN:
+                default:
+                    return UD.copy();
+                case NORTH:
+                case SOUTH:
+                    return NS.copy();
+                case EAST:
+                case WEST:
+                    return EW.copy();
+            }
+        else
+            switch (((Orientable) b.getBlockData()).getAxis()) {
+                case X:
+                    return EW.copy();
+                case Y:
+                    return UD.copy();
+                case Z:
+                    return NS.copy();
+            }
+
+        return null;
     }
 
 }
