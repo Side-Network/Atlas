@@ -44,6 +44,7 @@ public class DynamicFence implements CollisionFactory {
             case STICK:
             case MELON:
             case DAYLIGHT_DETECTOR:
+            case CHAIN:
             case BARRIER:
                 return true;
             default:
