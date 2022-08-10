@@ -609,7 +609,7 @@ public enum BlockData {
                 List<String> names = new ArrayList<>(Arrays.asList(mat.getLegacy()));
                 names.add(mat.name());
                 return names.stream().anyMatch(name ->
-                        name.contains("PLATE"));
+                        name.contains("PLATE") || name.contains("BANNER"));
             }).map(BlockData::m).toArray(Material[]::new));
 
     private CollisionBox box;
