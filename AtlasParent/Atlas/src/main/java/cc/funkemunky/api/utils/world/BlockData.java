@@ -3,7 +3,6 @@ package cc.funkemunky.api.utils.world;
 import cc.funkemunky.api.reflections.Reflections;
 import cc.funkemunky.api.tinyprotocol.api.ProtocolVersion;
 import cc.funkemunky.api.utils.MiscUtils;
-import cc.funkemunky.api.utils.ReflectionsUtil;
 import cc.funkemunky.api.utils.XMaterial;
 import cc.funkemunky.api.utils.world.blocks.*;
 import cc.funkemunky.api.utils.world.state.BlockStateManager;
@@ -295,7 +294,9 @@ public enum BlockData {
     
     _END_ROD(new DynamicRod(), XMaterial.END_ROD.parseMaterial(), XMaterial.LIGHTNING_ROD.parseMaterial(), XMaterial.CHAIN.parseMaterial()),
 
-    _CAULDRON(new CouldronBounding(), XMaterial.CAULDRON.parseMaterial()),
+    _CAULDRON(new CauldronCollision(), XMaterial.CAULDRON.parseMaterial()),
+
+    _COMPOSTER(new ComposterCollision(), XMaterial.COMPOSTER.parseMaterial()),
 
     _CACTUS(new SimpleCollisionBox(0.0625, 0, 0.0625,
             1 - 0.0625, 1 - 0.0625, 1 - 0.0625), XMaterial.CACTUS.parseMaterial()),
@@ -600,7 +601,7 @@ public enum BlockData {
     _NONE(NoCollisionBox.INSTANCE, Stream.of(XMaterial.TORCH, XMaterial.REDSTONE_TORCH,
             XMaterial.REDSTONE_WIRE, XMaterial.REDSTONE_WALL_TORCH, XMaterial.POWERED_RAIL, XMaterial.WALL_TORCH,
             XMaterial.RAIL, XMaterial.ACTIVATOR_RAIL, XMaterial.DETECTOR_RAIL, XMaterial.AIR, XMaterial.FERN,
-            XMaterial.TRIPWIRE, XMaterial.TRIPWIRE_HOOK)
+            XMaterial.TRIPWIRE, XMaterial.TRIPWIRE_HOOK, XMaterial.POINTED_DRIPSTONE)
             .map(BlockData::m)
             .toArray(Material[]::new)),
 
